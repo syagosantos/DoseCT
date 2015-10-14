@@ -1,33 +1,31 @@
-function busca_dose3()
+function busca_dose4()
 
-folder = cd(uigetdir);
+%selecionar a pasta com os exames DICOM
 
-if folder == 0
+pasta = cd(uigetdir);
+
+if pasta == 0
   return;
 end
-list = dir;
-llist = length(list);
-for i=3:llist
-    cd(list(i).name);
-    list2 = dir;
-    llist2 = length(list2);
-    for i2=3:llist2
-        cd(list2(i2).name);
-        list3 = dir;
-        llist3 = length(list3);
-        for i3=3:llist3
-            cd(list3(i3).name);
-            list4 = dir;
-            llist4 = length(list4);
-            for i4=3:llist4
-                
-                info = dicominfo(list4(i).name);
-                nome = info.PatientName;
-                    id = info.PatientID;
-                    data = info.StudyDate;
-                    ctdivol = info.CTDIvol;
-                    
-            end
-        end
-    end
+
+nomepast = pwd;
+
+
+
+%colocar os arquivos com a exteção .dcm em uma variável 
+
+dcm = rdir('**\*.dcm');
+
+for i=1:numel(dcm)
+    
+    info = dicominfo(dcm(i).name);
+    nome = info.PatientName;
+   
+end
+
+%criar um arquivo excel com o nome da pasta escolhida
+
+  xlswrite(nomepast,nome(i));
+
+
 end
